@@ -1,71 +1,42 @@
-import fs from 'react-native-fs';
-import Sound from 'react-native-sound';
-export const getAudio = (inputString, Language, Voice) => {
+import fs from "react-native-fs";
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-  
-    let payload = JSON.stringify({
-      controlConfig: {
-        dataTracking: true,
+// Uncomment this for backend
+
+export const getAudio = async (inputString, Language, Voice) => {
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  let payload = JSON.stringify({
+    controlConfig: {
+      dataTracking: true,
+    },
+    input: [{ source: inputString }],
+
+    config: {
+      gender: Voice,
+      language: {
+        sourceLanguage: Language,
       },
-      input: [{source: inputString}],
-  
-      config: {
-        gender: Voice,
-        language: {
-          sourceLanguage: Language,
-        },
-      },
-    });
-  
-    makeReq(payload,myHeaders);
-  };
-  
-  async function makeReq(payload,myHeaders){
+    },
+  });
   let apiURL = `https://demo-api.models.ai4bharat.org/inference/tts`;
-    
-      await fetch(apiURL, {
-      method: 'POST',
-      body: payload,
-      headers: myHeaders,
-      redirect: 'follow',
+
+  const mySound = await fetch(apiURL, {
+    method: "POST",
+    body: payload,
+    headers: myHeaders,
+    redirect: "follow",
+  })
+    .then((response) => {
+      return response.text();
     })
-      .then((response)=> {
-        return response.text();
-      })
-      .then((response)=> {
-        let apiResult = JSON.parse(response);
-        let audioContent = apiResult["audio"][0]["audioContent"];
-        const path = `${fs.DownloadDirectoryPath}/output.wav`;
-        
-        fs.writeFile(path, audioContent, 'base64').then(()=>{
-
-            const sound = new Sound(path,null,(error)=>{
-                if(error) {
-                    // console.log('Failed to load the source');
-                }
-                else
-                {
-                sound.play((success) => {
-                console.log("Message2: " + success);
-                if(success){
-                    console.log('new sound played');
-                }
-                else
-                {
-                    console.log('no sound played');
-                }
-            });
-                console.log("Message1: " + error);
-          }
-            });
-            
-
-        });
-
-        fs.exists(path).then((response)=>{
-            console.log(response.valueOf());
-        });       
-      }).catch(error => console.log("error", error));
-  }
+    .then(async (response) => {
+      let apiResult = JSON.parse(response);
+      let audioContent = apiResult["audio"][0]["audioContent"];
+      const path = `${fs.CachesDirectoryPath}/output.wav`;
+      await fs.writeFile(path, audioContent, "base64");
+    })
+    .catch((error) => console.log("error TTS", error));
+  return mySound;
+};

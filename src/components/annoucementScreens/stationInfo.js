@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-export default function Information() {
+export default function StationInfo() {
   return (
     <View>
-      <Text>Information</Text>
+      <Text>FromStation</Text>
     </View>
   )
 }

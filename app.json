@@ -4,7 +4,8 @@
     "slug": "RailBhasi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    // "icon": "./assets/icon.png",
+    "icon": "./assets/images_copy/misc/logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -26,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a4c8f649-6eda-4527-9d92-d0b869218a51"
+      }
     }
   }
 }

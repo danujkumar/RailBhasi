@@ -4,7 +4,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
-import { ClockIcon, HeartIcon, MapPinIcon, SunIcon } from 'react-native-heroicons/solid';
+import { ClockIcon, HeartIcon, MapPinIcon, SpeakerWaveIcon, SunIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../theme';
 const ios = Platform.OS == 'ios';
@@ -18,7 +18,7 @@ export default function DestinationScreen(props) {
   return (
     <View className="bg-white flex-1">
         {/* destination image */}
-        <Image source={item.image} style={{width: wp(100), height: hp(55)}} />
+        <Image source={require("../../assets/images/mountain.png")} style={{width: wp(100), height: hp(55)}} />
         <StatusBar style={'light'} />
 
         {/* back button */}
@@ -35,7 +35,7 @@ export default function DestinationScreen(props) {
                 className="p-2 rounded-full mr-4"
                 style={{backgroundColor: 'rgba(255,255,255,0.5)'}} 
             >
-                <HeartIcon size={wp(7)} strokeWidth={4} color={isFavourite? "red": "white"} />
+                <SpeakerWaveIcon size={wp(7)} strokeWidth={4} color={isFavourite? "red": "white"} />
             </TouchableOpacity>
         </SafeAreaView>
 
